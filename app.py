@@ -24,6 +24,7 @@ def books():
     book_repo = BookRepository(conn)
 
     books = book_repo.all()
+
     return render_template("books.html", books=books)
 
 

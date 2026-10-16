@@ -1,21 +1,17 @@
-<html>
+{% extends 'base.html' %}
 
-<head>
-    <title>Book Store</title>
-    <link rel="stylesheet" href="/static/styles.css">
+{% block title %}Books{% endblock %}
 
-</head>
-
-<body>
-    <main>
-        <h1>My Books</h1>
-        <a href="/">home</a>
+{% block content %}
+<h1>My Books</h1>
+    <a href="/">home</a>
+    {% if books %}
         <ul>
             {% for book in books %}
-            <li>{{ book.title }} by {{ book.author }}</li>
+                <li>{{ book.title }} by {{ book.author }}</li>
             {% endfor %}
         </ul>
-    </main>
-</body>
-
-</html>
+    {% else %}
+        <p>No books yet!</p>
+    {% endif %}
+{% endblock %}

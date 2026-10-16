@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.jinja": "jinja",
+        "*.html": "jinja-html",
+        "*.sls": "jinja-yaml"
+    }
+}
