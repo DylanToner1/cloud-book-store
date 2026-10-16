@@ -5,7 +5,7 @@ from psycopg.rows import class_row, dict_row
 
 
 class DatabaseConnection:
-    DATABASE_NAME = "shop_manager"
+    DATABASE_NAME = "book_store"
 
     def __init__(self):
         self.connection = None
@@ -14,9 +14,10 @@ class DatabaseConnection:
     # to localhost and select the database name given in argument.
     def connect(self):
         try:
-            self.connection = psycopg.connect(
-                f"postgresql://localhost/{self.DATABASE_NAME}", row_factory=dict_row
+            conn_str = os.getenv(
+                "POSTGRES_URL", f"postgresql://localhost/{self.DATABASE_NAME}"
             )
+            self.connection = psycopg.connect(conn_str, row_factory=dict_row)
         except psycopg.OperationalError:
             raise Exception(
                 f"Couldn't connect to the database {self.DATABASE_NAME}! "

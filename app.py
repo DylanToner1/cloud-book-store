@@ -1,5 +1,8 @@
 from flask import Flask, render_template
 
+from lib.book_repo import BookRepository
+from lib.db_conn import DatabaseConnection
+
 app = Flask(__name__)
 
 
@@ -15,7 +18,13 @@ def hello():
 
 @app.route("/books", methods=["GET"])
 def books():
-    return render_template("books.html")
+    conn = DatabaseConnection()
+    conn.connect()
+
+    book_repo = BookRepository(conn)
+
+    books = book_repo.all()
+    return render_template("books.html", books=books)
 
 
 @app.route("/authors", methods=["GET"])

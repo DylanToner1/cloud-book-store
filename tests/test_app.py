@@ -1,4 +1,4 @@
-from lib.app import app
+from app import app
 
 
 def test_get_books_returns_a_200():
