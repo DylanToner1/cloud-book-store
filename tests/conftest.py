@@ -37,6 +37,7 @@ def db_connection(migrated_db):
     conn = DatabaseConnection(TEST_URL)
     conn.connect()
     conn.seed("seeds/books.sql")  # reset data for each test
+    conn.seed("seeds/users.sql")
     return conn
 
 

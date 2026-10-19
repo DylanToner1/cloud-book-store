@@ -1,5 +1,5 @@
-from lib.models.book import Book
 from lib.db_conn import DatabaseConnection
+from lib.models.book import Book
 
 
 class BookRepository:
@@ -20,7 +20,7 @@ class BookRepository:
 
     # Create a new book
     # Do you want to get its id back? Look into RETURNING id;
-    def create(self, book):
+    def create(self, book: Book):
         rows = self._connection.execute(
             "INSERT INTO books (title, author) VALUES (%s, %s) RETURNING id",
             [book.title, book.author],
