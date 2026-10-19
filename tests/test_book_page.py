@@ -17,15 +17,8 @@ from lib.db_conn import DatabaseConnection
 #     )
 
 
-def test_can_add_book(db_connection, page: Page):
-    # using the db_connection fixture triggers the seeding
-
-    page.goto("/login")
-
-    page.get_by_label("Username").fill("test")
-    page.get_by_label("Password").fill("test")
-
-    page.get_by_role("button", name="Log In").click()
+def test_can_add_book(logged_in_page: Page):
+    page = logged_in_page
 
     page.goto("/books")
 
@@ -37,6 +30,23 @@ def test_can_add_book(db_connection, page: Page):
     expect(
         page.get_by_role("listitem").filter(has_text="test book by test author")
     ).to_be_visible()
+
+
+def test_cant_add_book_blank_values(logged_in_page: Page):
+    page = logged_in_page
+
+    page.goto("/books")
+
+    page.get_by_label("Title").fill("")
+    page.get_by_label("Author").fill("test author")
+
+    page.get_by_role("button", name="Submit").click()
+
+    expect(
+        page.locator("p.error").filter(has_text="Title or Author can't be blank!")
+    ).to_be_visible()
+
+    expect(page.get_by_role("listitem").filter(has_text="test author")).to_have_count(0)
 
 
 def test_unauthenticated_cant_add_book(db_connection, page: Page):

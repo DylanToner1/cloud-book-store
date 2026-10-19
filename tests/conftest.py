@@ -3,6 +3,7 @@ import threading
 from pathlib import Path
 
 import pytest
+from playwright.sync_api import Page
 from werkzeug.serving import make_server
 from yoyo import get_backend, read_migrations
 
@@ -66,3 +67,20 @@ def base_url(app):
     thread.start()
     yield f"http://127.0.0.1:{server.port}"
     server.shutdown()
+
+
+@pytest.fixture
+def logged_in_page(db_connection, page: Page):
+    """
+    Logs in to the application automatically.
+    Uses db_connection to seed the test user.
+    """
+
+    page.goto("/login")
+    page.get_by_label("Username").fill("test")
+    page.get_by_label("Password").fill("test")
+    page.get_by_role("button", name="Log In").click()
+
+    page.wait_for_url("**/")
+
+    return page
