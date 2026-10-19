@@ -7,17 +7,15 @@ from psycopg.rows import class_row, dict_row
 class DatabaseConnection:
     DATABASE_NAME = "book_store"
 
-    def __init__(self):
+    def __init__(self, url=None):
+        self.url = url or f"postgresql://localhost/{self.DATABASE_NAME}"
         self.connection = None
 
     # This method connects to PostgreSQL using the psycopg library. We connect
     # to localhost and select the database name given in argument.
     def connect(self):
         try:
-            conn_str = os.getenv(
-                "POSTGRES_URL", f"postgresql://localhost/{self.DATABASE_NAME}"
-            )
-            self.connection = psycopg.connect(conn_str, row_factory=dict_row)
+            self.connection = psycopg.connect(self.url, row_factory=dict_row)
         except psycopg.OperationalError:
             raise Exception(
                 f"Couldn't connect to the database {self.DATABASE_NAME}! "

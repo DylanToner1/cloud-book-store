@@ -17,14 +17,10 @@ from lib.db_conn import DatabaseConnection
 #     )
 
 
-def test_can_add_book(page: Page):
-    conn = DatabaseConnection()
+def test_can_add_book(db_connection, page: Page):
+    # using the db_connection fixture triggers the seeding
 
-    conn.connect()
-
-    conn.seed("seeds/books.sql")
-
-    page.goto("http://127.0.0.1:5001/books")
+    page.goto("/books")
 
     page.get_by_label("Title").fill("test book")
     page.get_by_label("Author").fill("test author")

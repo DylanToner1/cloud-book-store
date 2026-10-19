@@ -1,7 +1,4 @@
-from app import app
-
-
-def test_get_books_returns_a_200():
+def test_get_books_returns_a_200(app):
     client = app.test_client()
 
     response = client.get("/books")
@@ -9,7 +6,7 @@ def test_get_books_returns_a_200():
     assert response.status_code == 200
 
 
-def test_get_authors_returns_200():
+def test_get_authors_returns_200(app):
     client = app.test_client()
 
     resp = client.get("/authors")
@@ -17,7 +14,7 @@ def test_get_authors_returns_200():
     assert resp.status_code == 200
 
 
-def test_get_authors_returns_all_authors():
+def test_get_authors_returns_all_authors(app):
     client = app.test_client()
 
     resp = client.get("/authors")
