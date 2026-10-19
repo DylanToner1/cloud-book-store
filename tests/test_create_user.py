@@ -3,7 +3,7 @@ def test_create_user_is_saved_to_database(app, db_connection):
 
     resp = client.post("/users", data={"username": "testuser", "password": "1234"})
 
-    assert resp.status_code == 200
+    assert resp.status_code == 302  # redirects after creation
 
     result = db_connection.execute("SELECT * FROM users WHERE username = 'testuser'")
 

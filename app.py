@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, current_app, redirect, render_template, request, session
 
+from auth import login_required
 from lib.book_repo import BookRepository
 from lib.db_conn import DatabaseConnection
 from lib.models.book import Book
@@ -30,10 +31,6 @@ def create_app(db_url=None):
     def index():
         return render_template("index.html")
 
-    @app.route("/hello", methods=["GET"])
-    def hello():
-        return "Hello to you too"
-
     @app.route("/books", methods=["GET"])
     def books():
         repo = BookRepository(get_db())
@@ -43,7 +40,9 @@ def create_app(db_url=None):
         return render_template("books.html", books=books)
 
     @app.route("/books", methods=["POST"])
+    @login_required
     def create_book():
+
         book_details = request.form
 
         title = book_details.get("title")
