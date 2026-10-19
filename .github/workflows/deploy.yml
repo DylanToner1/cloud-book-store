@@ -20,6 +20,9 @@ jobs:
           username: "ec2-user"
           port: 22
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: ./deploy.sh
+          script: |
+            cd /home/ec2-user/book_store
+            git pull origin main
+            ./deploy.sh
 
     
