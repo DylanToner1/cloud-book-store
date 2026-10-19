@@ -6,6 +6,17 @@
 {% block content %}
 <h1>Welcome to Book Store</h1>
 
+{% for message in get_flashed_messages() %}
+    <p class="success">{{ message }}</p>
+{% endfor %}
+
+{% if session.get("user_id") %}
+    <a href="/logout">Log Out</a>
+{% else %}
 <a href="/signup">Sign Up</a>
+<a href="/login">Log In</a>
+{% endif %}
+
+
 <a href="/books">Go to books</a>
 {% endblock %}

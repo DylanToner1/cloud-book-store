@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, current_app, redirect, render_template, request, session
+from flask import Flask, current_app, redirect, render_template, request, session, flash
 
 from auth import login_required
 from lib.book_repo import BookRepository
@@ -49,7 +49,8 @@ def create_app(db_url=None):
         author = book_details.get("author")
 
         if not title or not author:
-            return "values can't be blank", 400
+            flash("Title or Author can't be blank!")
+            return redirect("/books")
 
         repo = BookRepository(get_db())
 
@@ -67,7 +68,9 @@ def create_app(db_url=None):
 
     @app.route("/signup", methods=["GET"])
     def signup():
-        return render_template("signup.html")
+        return render_template(
+            "signup.html", username=session.pop("signup_username", "")
+        )
 
     @app.route("/users", methods=["POST"])
     def new_user():
@@ -77,7 +80,9 @@ def create_app(db_url=None):
         password = user_details.get("password")
 
         if not username or not password:
-            return "values can't be blank", 400
+            flash("Invalid username or password")
+            session["signup_username"] = username
+            return redirect("/signup")
 
         repo = UserRepository(get_db())
 
@@ -90,7 +95,7 @@ def create_app(db_url=None):
 
     @app.route("/login", methods=["GET"])
     def login():
-        return render_template("login.html")
+        return render_template("login.html", username=session.pop("login_username", ""))
 
     @app.route("/sessions", methods=["POST"])
     def new_session():
@@ -100,22 +105,33 @@ def create_app(db_url=None):
         password = user_details.get("password")
 
         if not username or not password:
-            return "values can't be blank", 400
+            flash("Invalid username or password")
+            session["login_username"] = username
+            return redirect("/login")
 
         repo = UserRepository(get_db())
 
         user = repo.get_by_username(username)
 
-        if not user:
-            return redirect("/login")
-
-        if password != user.password:
+        if not user or password != user.password:
+            flash("Invalid username or password")
+            session["login_username"] = username
             return redirect("/login")
 
         session["user_id"] = user.id
         session["username"] = user.username
 
         return redirect("/books")
+
+    @app.route("/logout", methods=["GET"])
+    def logout():
+
+        session.pop("user_id", None)
+        session.pop("username", None)
+
+        flash("Logged out!")
+
+        return redirect("/")
 
     return app
 

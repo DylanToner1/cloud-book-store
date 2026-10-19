@@ -7,6 +7,9 @@
     <a href="/">home</a>
     <br>
     <h4 style="margin-bottom: 1rem">New book</h4>
+    {% for message in get_flashed_messages() %}
+        <p class="error">{{ message }}</p>
+    {% endfor %}
     <form method="POST" action="/books">
         <label for="title">Title</label>
         <input type="text" id="title" name="title"><br>
