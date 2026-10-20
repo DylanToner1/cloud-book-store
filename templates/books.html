@@ -5,7 +5,12 @@
 {% block content %}
 <h1 class="text-2xl font-semibold">My Books</h1>
 <a href="/books/new" class="btn-primary">Add book</a>
+{% for message in get_flashed_messages() %}
+<p class="error">{{ message }}</p>
+{% endfor %}
 <br>
+
+
 
 
 {% if books %}
@@ -13,9 +18,10 @@
     {% for book in books %}
     <div class="flex flex-col gap-2 p-2 bg-[#2a2a2f] rounded-xl">
         <div class="flex flex-col">
-            <p class="font-semibold text-lg" data-testid="book-title">
+            <a href="/books/{{ book.id }}" class="font-semibold text-lg hover:underline cursor-pointer"
+                data-testid="book-title">
                 {{ book.title }}
-            </p>
+            </a>
             <p class="text-white/50 text-sm" data-testid="book-author">
                 by {{ book.author }}
             </p>

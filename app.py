@@ -75,6 +75,18 @@ def create_app(db_url=None):
         )
         return redirect("/books")
 
+    @app.route("/books/<id>")
+    def get_book(id):
+        repo = BookRepository(get_db())
+
+        book = repo.find(id)
+
+        if not book:
+            flash("That book doesn't exist!")
+            return redirect("/books")
+
+        return render_template("book.html", book=book)
+
     @app.route("/authors", methods=["GET"])
     def authors():
         return [

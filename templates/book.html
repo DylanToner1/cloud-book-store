@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }} by {{book.author}}{% endblock %}
+
+{% block content %}
+
+
+<div class="flex flex-col gap-6">
+    <div class="flex flex-col">
+        <p class="font-semibold text-4xl" data-testid="book-title">
+            {{ book.title }}
+        </p>
+        <p class="text-white/50 text-lg" data-testid="book-author">
+            by {{ book.author }}
+        </p>
+    </div>
+    <div class="flex-col flex gap-2">
+        <p class="p-2 bg-[#2a2a2f] w-fit rounded-lg" data-testid="book-rating">Rating: {{ book.format_rating() }}
+        </p>
+        <p class="p-2 bg-[#2a2a2f] w-fit rounded-lg">Synopsis: {{ book.synopsis }}</p>
+        <p class="p-2 bg-[#2a2a2f] w-fit rounded-lg">Notes: {{ book.notes }}</p>
+    </div>
+</div>
+{% endblock %}
