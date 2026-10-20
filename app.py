@@ -2,7 +2,7 @@ import os
 from decimal import Decimal
 
 from flask import Flask, current_app, flash, redirect, render_template, request, session
-from livereload import Server
+from flask_bcrypt import Bcrypt
 
 from auth import login_required
 from lib.book_repo import BookRepository
@@ -21,6 +21,8 @@ def get_db():
 
 def create_app(db_url=None):
     app = Flask(__name__)
+
+    bcrypt = Bcrypt(app)
 
     # the app uses whatever database we give it when starting
     app.config["DB_URL"] = db_url or os.getenv(
@@ -114,9 +116,11 @@ def create_app(db_url=None):
             session["signup_username"] = username
             return redirect("/signup")
 
+        pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+
         repo = UserRepository(get_db())
 
-        user_id = repo.create(User(id=0, username=username, password=password))
+        user_id = repo.create(User(id=0, username=username, password=pw_hash))
 
         session["user_id"] = user_id
         session["username"] = username
@@ -143,7 +147,7 @@ def create_app(db_url=None):
 
         user = repo.get_by_username(username)
 
-        if not user or password != user.password:
+        if not user or not bcrypt.check_password_hash(user.password, password):
             flash("Invalid username or password")
             session["login_username"] = username
             return redirect("/login")

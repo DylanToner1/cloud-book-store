@@ -9,3 +9,13 @@ def test_create_user_is_saved_to_database(app, db_connection):
 
     assert len(result) == 1
     assert result[0]["username"] == "testuser"
+
+
+def test_password_is_hashed(app, db_connection):
+    client = app.test_client()
+
+    client.post("/users", data={"username": "testuser", "password": "1234"})
+
+    result = db_connection.execute("SELECT * FROM users WHERE username = 'testuser'")
+
+    assert result[0]["password"] != "1234"
