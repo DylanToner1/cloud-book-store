@@ -2,6 +2,7 @@ x-app: &app
   image: book_store_app:latest
   environment:
     POSTGRES_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
+    FLAGSMITH_KEY: ${FLAGSMITH_KEY}
 
   networks:
     - book_store_network
@@ -36,8 +37,6 @@ services:
     ports:
       - 5001:5001
     pull_policy: never
-    environment:
-      FLAGSMITH_KEY: ${FLAGSMITH_KEY}
     depends_on:
       migrate:
         condition: service_completed_successfully
