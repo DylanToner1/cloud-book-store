@@ -39,6 +39,7 @@ def db_connection(migrated_db):
     conn.connect()
     conn.seed("seeds/books.sql")  # reset data for each test
     conn.seed("seeds/users.sql")
+    conn.seed("seeds/films.sql")
     return conn
 
 
