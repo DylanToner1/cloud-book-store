@@ -9,12 +9,20 @@ def test_can_add_book(logged_in_page: Page):
 
     page.get_by_label("Title").fill("test book")
     page.get_by_label("Author").fill("test author")
-    page.get_by_label("Rating").fill("2.3")
+    page.get_by_label("Rating").fill("4.5")
 
     page.get_by_role("button", name="Submit").click()
 
     expect(
-        page.get_by_role("listitem").filter(has_text="test book by test author | 2.3/5")
+        page.get_by_test_id("book-title").filter(has_text="test book")
+    ).to_be_visible()
+
+    expect(
+        page.get_by_test_id("book-author").filter(has_text="by test author")
+    ).to_be_visible()
+
+    expect(
+        page.get_by_test_id("book-rating").filter(has_text="Rating: 4.5/5")
     ).to_be_visible()
 
 
@@ -32,7 +40,9 @@ def test_cant_add_book_blank_values(logged_in_page: Page):
         page.locator("p.error").filter(has_text="Title or Author can't be blank!")
     ).to_be_visible()
 
-    expect(page.get_by_role("listitem").filter(has_text="test author")).to_have_count(0)
+    expect(
+        page.get_by_test_id("book-author").filter(has_text="test author")
+    ).to_have_count(0)
 
 
 def test_unauthenticated_cant_add_book(db_connection, page: Page):
