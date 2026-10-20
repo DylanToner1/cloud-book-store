@@ -12,6 +12,8 @@ from lib.db_conn import DatabaseConnection
 from lib.models.book import Book
 from lib.models.user import User
 from lib.user_repo import UserRepository
+from lib.film_repo import FilmRepository
+from lib.film_repo import Film
 
 load_dotenv()
 
@@ -53,6 +55,14 @@ def create_app(db_url=None):
         books = repo.all()
 
         return render_template("books.html", books=books)
+
+    @app.route("/films", methods=["GET"])
+    def films():
+        repo = FilmRepository(get_db())
+
+        films = repo.all()
+
+        return render_template("films.html", films=films)
 
     @app.route("/books/new", methods=["GET"])
     @login_required

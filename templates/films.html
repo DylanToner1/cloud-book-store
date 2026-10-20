@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block title %}Films{% endblock %} {% block content %}
+<h1 class="text-2xl font-semibold">My Films</h1>
+<a href="/films/new" class="btn-primary">Add film</a>
+{% for message in get_flashed_messages() %}
+<p class="error">{{ message }}</p>
+{% endfor %}
+<br />
+
+{% if films %}
+<div class="flex flex-row gap-4 flex-wrap justify-center">
+	{% for film in films %}
+	<div class="flex flex-col gap-2 p-2 bg-[#2a2a2f] rounded-xl">
+		<div class="flex flex-col">
+			<a
+				href="/films/{{ film.id }}"
+				class="font-semibold text-lg hover:underline cursor-pointer"
+				data-testid="film-title">
+				{{ film.title }}
+			</a>
+		</div>
+		<div class="flex-row flex flex-wrap gap-2">
+			<p class="p-2 bg-[#1a1a1f] w-fit rounded-lg" data-testid="film-release_date">
+				Rating: {{ film.release_date.isoformat() }}
+			</p>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% else %}
+<p>No Films yet!</p>
+{% endif %} {% endblock %}
