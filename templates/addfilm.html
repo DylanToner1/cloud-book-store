@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Films{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-semibold">New film</h1>
+{% for message in get_flashed_messages() %}
+<p class="error">{{ message }}</p>
+{% endfor %}
+
+<form method="POST" action="/films/new" class="form">
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" class="form-input"><br>
+
+    <label for="release-date">Release Date</label>
+    <input type="date" id="release-date" name="release-date" class="form-input"><br>
+
+    <input type="submit" value="Submit" class="btn-primary mt-2">
+</form>
+{% endblock %}

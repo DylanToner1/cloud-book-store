@@ -1,4 +1,5 @@
 import os
+from datetime import date
 from decimal import Decimal
 
 from dotenv import load_dotenv
@@ -9,11 +10,11 @@ from flask_bcrypt import Bcrypt
 from auth import login_required
 from lib.book_repo import BookRepository
 from lib.db_conn import DatabaseConnection
+from lib.film_repo import FilmRepository
 from lib.models.book import Book
+from lib.models.film import Film
 from lib.models.user import User
 from lib.user_repo import UserRepository
-from lib.film_repo import FilmRepository
-from lib.film_repo import Film
 
 load_dotenv()
 
@@ -63,6 +64,36 @@ def create_app(db_url=None):
         films = repo.all()
 
         return render_template("films.html", films=films)
+
+    @app.route("/films/new", methods=["GET"])
+    @login_required
+    def add_film_page():
+        return render_template("addfilm.html")
+
+    @app.route("/films/new", methods=["POST"])
+    @login_required
+    def create_film():
+        film_details = request.form
+
+        title = film_details.get("title")
+        release_date = film_details.get("release-date")
+
+        if not title or not release_date:
+            flash("Title or Release Date can't be blank!")
+            return redirect("/films/new")
+
+        release_date = date.fromisoformat(release_date)
+
+        repo = FilmRepository(get_db())
+
+        repo.create(
+            Film(
+                id=0,
+                title=title,
+                release_date=release_date,
+            )
+        )
+        return redirect("/films")
 
     @app.route("/books/new", methods=["GET"])
     @login_required
