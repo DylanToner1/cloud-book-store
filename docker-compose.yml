@@ -36,6 +36,8 @@ services:
     ports:
       - 5001:5001
     pull_policy: never
+    environment:
+      FLAGSMITH_KEY: ${FLAGSMITH_KEY}
     depends_on:
       migrate:
         condition: service_completed_successfully
