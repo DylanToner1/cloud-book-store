@@ -97,7 +97,7 @@ def create_app(db_url=None):
         password = user_details.get("password")
 
         if not username or not password:
-            flash("Invalid username or password")
+            flash("Username or password can't be empty")
             session["signup_username"] = username
             return redirect("/signup")
 
@@ -122,7 +122,7 @@ def create_app(db_url=None):
         password = user_details.get("password")
 
         if not username or not password:
-            flash("Invalid username or password")
+            flash("Username or password can't be empty")
             session["login_username"] = username
             return redirect("/login")
 

@@ -8,7 +8,11 @@
 </head>
 
 <body>
-    {% block content %}{% endblock %}
+{% if session.get("user_id") %}
+    <a href="/logout">Log Out</a>
+{% endif %}
+
+{% block content %}{% endblock %}
 </body>
 
 </html>
