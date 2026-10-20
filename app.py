@@ -95,6 +95,18 @@ def create_app(db_url=None):
         )
         return redirect("/films")
 
+    @app.route("/films/<id>")
+    def get_film(id):
+        repo = FilmRepository(get_db())
+
+        film = repo.find(id)
+
+        if not film:
+            flash("That film doesn't exist!")
+            return redirect("/films")
+
+        return render_template("film.html", film=film)
+
     @app.route("/books/new", methods=["GET"])
     @login_required
     def add_book_page():
