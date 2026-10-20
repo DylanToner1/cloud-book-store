@@ -1,0 +1,5 @@
+venv
+htmlcov
+.env
+.git
+tests

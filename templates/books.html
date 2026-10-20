@@ -3,20 +3,32 @@
 {% block title %}Books{% endblock %}
 
 {% block content %}
-<h1>My Books</h1>
-    <a href="/">home</a>
-    <br>
-    <h4 style="margin-bottom: 0">Books:</h4>
-    <a href="/books/new">Add book</a>
+<h1 class="text-2xl font-semibold">My Books</h1>
+<a href="/books/new" class="btn-primary">Add book</a>
+<br>
 
 
-    {% if books %}
-        <ul>
-            {% for book in books %}
-                <li>{{ book.title }} by {{ book.author }} | {{ book.format_rating() }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No books yet!</p>
-    {% endif %}
+{% if books %}
+<div class="flex flex-row gap-4 flex-wrap justify-center">
+    {% for book in books %}
+    <div class="flex flex-col gap-2 p-2 bg-[#2a2a2f] rounded-xl">
+        <div class="flex flex-col">
+            <p class="font-semibold text-lg">
+                {{ book.title }}
+            </p>
+            <p class="text-white/50 text-sm">
+                by {{ book.author }}
+            </p>
+        </div>
+        <div class="flex-row flex flex-wrap gap-2">
+            <p class="p-2 bg-[#1a1a1f] w-fit rounded-lg">Rating: {{ book.format_rating() }}</p>
+            <p class="p-2 bg-[#1a1a1f] w-fit rounded-lg">Synopsis: {{ book.synopsis }}</p>
+            <p class="p-2 bg-[#1a1a1f] w-fit rounded-lg">Notes: {{ book.notes }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No books yet!</p>
+{% endif %}
 {% endblock %}

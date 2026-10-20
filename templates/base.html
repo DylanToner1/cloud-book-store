@@ -2,17 +2,32 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
     <title>{% block title %}{% endblock %}</title>
 </head>
 
-<body>
-{% if session.get("user_id") %}
-    <a href="/logout">Log Out</a>
-{% endif %}
+<body class="text-white bg-[#1a1a1f]">
+    <nav class="flex flex-row justify-between gap-4 p-3 px-5 bg-[#2a2a2f]">
+        <div class='flex flex-row gap-6 items-center'>
+            <p class="text-xl font-semibold">Book Store</p>
+            <div class='flex flex-row gap-2 '>
+                <a href="/" class="btn-ghost">Home</a>
+                <a href="/books" class="btn-ghost">Books</a>
+            </div>
+        </div>
 
-{% block content %}{% endblock %}
+        <div class='flex flex-row gap-2'>
+            {% if session.get("user_id") %}
+            <a href="/logout" class="btn-ghost">Log Out</a>
+            {% else %}
+            <a href="/signup" class="btn-ghost">Sign Up</a>
+            <a href="/login" class="btn-ghost">Log In</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="flex flex-col gap-4 p-6">
+        {% block content %}{% endblock %}
+    </div>
 </body>
 
 </html>

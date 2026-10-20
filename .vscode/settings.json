@@ -1,7 +1,20 @@
 {
+    "material-icon-theme.languages.associations": {
+        "jinja-html": "html"
+    },
     "files.associations": {
         "*.jinja": "jinja",
         "*.html": "jinja-html",
         "*.sls": "jinja-yaml"
+    },
+    "emmet.includeLanguages": {
+        "jinja-html": "html"
+    },
+    "tailwindCSS.includeLanguages": {
+        "jinja-html": "html",
+        "html": "html"
+    },
+    "editor.quickSuggestions": {
+        "strings": "on"
     }
 }

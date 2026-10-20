@@ -1,7 +1,8 @@
-from decimal import Decimal
 import os
+from decimal import Decimal
 
-from flask import Flask, current_app, redirect, render_template, request, session, flash
+from flask import Flask, current_app, flash, redirect, render_template, request, session
+from livereload import Server
 
 from auth import login_required
 from lib.book_repo import BookRepository
@@ -154,6 +155,3 @@ def create_app(db_url=None):
 
 
 app = create_app()
-
-if __name__ == "__main__":  # pragma: no cover
-    app.run(host="0.0.0.0", port=5001, debug=True)

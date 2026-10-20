@@ -4,22 +4,16 @@
 
 
 {% block content %}
-<h1>Welcome to Book Store</h1>
+<h1 class="text-4xl font-semibold">Welcome to Book Store</h1>
 
 {% if session.get("username") %}
-    <p>Hello, {{ session.get("username") }}</p>
+<p>Hello, {{ session.get("username") }}</p>
 
 {% endif %}
 
 {% for message in get_flashed_messages() %}
-    <p class="success">{{ message }}</p>
+<p class="success">{{ message }}</p>
 {% endfor %}
 
-{% if not session.get("user_id") %}
-<a href="/signup">Sign Up</a>
-<a href="/login">Log In</a>
-{% endif %}
-
-
-<a href="/books">Go to books</a>
+<a href="/books" class="btn-primary">Go to books</a>
 {% endblock %}

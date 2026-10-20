@@ -3,25 +3,19 @@
 {% block title %}Log In{% endblock %}
 
 {% block content %}
-<h1>Log In</h1>
-    <a href="/">home</a>
-    <br>
-    {% for message in get_flashed_messages() %}
-        <p class="error">{{ message }}</p>
-    {% endfor %}
+<h1 class="text-2xl font-semibold">Log In</h1>
+{% for message in get_flashed_messages() %}
+<p class="error">{{ message }}</p>
+{% endfor %}
 
-    <form method="POST" action="/sessions">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="{{ username }}">
-        
-        <br>
+<form method="POST" action="/sessions" class="form">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" value="{{ username }}" class="form-input">
 
-        <label for="password">Password</label>
-        <input type="text" id="password" name="password">
-        
-        
-        <br>
 
-        <input type="submit" value="Log In">
-    </form>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" class="form-input">
+
+    <input type="submit" value="Log In" class="btn-primary mt-2">
+</form>
 {% endblock %}

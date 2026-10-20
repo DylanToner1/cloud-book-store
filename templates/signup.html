@@ -3,23 +3,17 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<h1>Sign Up</h1>
-    <a href="/">home</a>
-    <br>
-    {% for message in get_flashed_messages() %}
-        <p class="error">{{ message }}</p>
-    {% endfor %}
-    <form method="POST" action="/users">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="{{ username }}">
-        
-        <br>
+<h1 class="text-2xl font-semibold">Sign Up</h1>
+{% for message in get_flashed_messages() %}
+<p class="error">{{ message }}</p>
+{% endfor %}
+<form method="POST" action="/users" class="form">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" value="{{ username }}" class="form-input">
 
-        <label for="password">Password</label>
-        <input type="text" id="password" name="password">
-        
-        <br>
+    <label for="password">Password</label>
+    <input type="text" id="password" name="password" class="form-input">
 
-        <input type="submit" value="Sign Up">
-    </form>
+    <input type="submit" value="Sign Up" class="btn-primary mt-2">
+</form>
 {% endblock %}
