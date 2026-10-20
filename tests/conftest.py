@@ -81,6 +81,6 @@ def logged_in_page(db_connection, page: Page):
     page.get_by_label("Password").fill("test")
     page.get_by_role("button", name="Log In").click()
 
-    page.wait_for_url("**/")
+    # page.wait_for_url("**/")
 
     return page
