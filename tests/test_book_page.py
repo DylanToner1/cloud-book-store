@@ -24,11 +24,12 @@ def test_can_add_book(logged_in_page: Page):
 
     page.get_by_label("Title").fill("test book")
     page.get_by_label("Author").fill("test author")
+    page.get_by_label("Rating").fill("2.3")
 
     page.get_by_role("button", name="Submit").click()
 
     expect(
-        page.get_by_role("listitem").filter(has_text="test book by test author")
+        page.get_by_role("listitem").filter(has_text="test book by test author | 2.3/5")
     ).to_be_visible()
 
 

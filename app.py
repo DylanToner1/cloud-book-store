@@ -1,3 +1,4 @@
+from decimal import Decimal
 import os
 
 from flask import Flask, current_app, redirect, render_template, request, session, flash
@@ -47,6 +48,9 @@ def create_app(db_url=None):
 
         title = book_details.get("title")
         author = book_details.get("author")
+        synopsis = book_details.get("synopsis")
+        rating = book_details.get("rating")
+        notes = book_details.get("notes")
 
         if not title or not author:
             flash("Title or Author can't be blank!")
@@ -54,7 +58,16 @@ def create_app(db_url=None):
 
         repo = BookRepository(get_db())
 
-        repo.create(Book(id=0, title=title, author=author))
+        repo.create(
+            Book(
+                id=0,
+                title=title,
+                author=author,
+                synopsis=synopsis,
+                rating=Decimal(rating) if rating else None,
+                notes=notes,
+            )
+        )
         return redirect("/books")
 
     @app.route("/authors", methods=["GET"])

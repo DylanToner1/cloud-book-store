@@ -22,8 +22,8 @@ class BookRepository:
     # Do you want to get its id back? Look into RETURNING id;
     def create(self, book: Book):
         rows = self._connection.execute(
-            "INSERT INTO books (title, author) VALUES (%s, %s) RETURNING id",
-            [book.title, book.author],
+            "INSERT INTO books (title, author, synopsis, rating, notes) VALUES (%s, %s, %s, %s, %s) RETURNING id",
+            [book.title, book.author, book.synopsis, book.rating, book.notes],
         )
         return int(rows[0]["id"])
 
