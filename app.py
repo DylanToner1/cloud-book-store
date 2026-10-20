@@ -40,10 +40,14 @@ def create_app(db_url=None):
 
         return render_template("books.html", books=books)
 
-    @app.route("/books", methods=["POST"])
+    @app.route("/books/new", methods=["GET"])
+    @login_required
+    def add_book_page():
+        return render_template("addbook.html")
+
+    @app.route("/books/new", methods=["POST"])
     @login_required
     def create_book():
-
         book_details = request.form
 
         title = book_details.get("title")
@@ -54,7 +58,7 @@ def create_app(db_url=None):
 
         if not title or not author:
             flash("Title or Author can't be blank!")
-            return redirect("/books")
+            return redirect("/books/new")
 
         repo = BookRepository(get_db())
 
