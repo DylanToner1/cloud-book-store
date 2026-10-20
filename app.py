@@ -189,7 +189,7 @@ def create_app(db_url=None):
         session["user_id"] = user_id
         session["username"] = username
 
-        return redirect("/books")
+        return redirect("/")
 
     @app.route("/login", methods=["GET"])
     def login():
@@ -219,7 +219,7 @@ def create_app(db_url=None):
         session["user_id"] = user.id
         session["username"] = user.username
 
-        return redirect("/books")
+        return redirect("/")
 
     @app.route("/logout", methods=["GET"])
     def logout():

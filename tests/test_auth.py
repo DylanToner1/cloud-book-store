@@ -7,7 +7,7 @@ def test_user_log_in_correct_credentials(app, db_connection):
     resp = client.post("/sessions", data={"username": "test", "password": "test"})
 
     assert resp.status_code == 302  # redirects after login
-    assert resp.headers["Location"].endswith("/books")
+    assert resp.headers["Location"].endswith("/")
 
 
 def test_user_log_in_incorrect_credentials(app, db_connection):
@@ -27,7 +27,7 @@ def test_user_log_in_page(db_connection, page: Page):
 
     page.get_by_role("button", name="Log In").click()
 
-    assert page.url.endswith("/books")
+    assert page.url.endswith("/")
 
 
 def test_user_log_in_page_wrong_credentials(db_connection, page: Page):
