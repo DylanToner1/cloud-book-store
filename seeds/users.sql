@@ -1,6 +1,4 @@
-TRUNCATE TABLE users;
-
-ALTER SEQUENCE users_id_seq RESTART WITH 1;
+TRUNCATE TABLE users RESTART IDENTITY;
 
 -- passwords: test, test2
 INSERT INTO users (username, password) VALUES('test', '$2b$12$AvvLEFFUG/00XzBB6Xz54Onm9cTnqJQ7TIf5Xm4JqDErb7TaAyXJi');
