@@ -1,6 +1,8 @@
 import os
 from decimal import Decimal
 
+from dotenv import load_dotenv
+from flagsmith import Flagsmith
 from flask import Flask, current_app, flash, redirect, render_template, request, session
 from flask_bcrypt import Bcrypt
 
@@ -10,6 +12,8 @@ from lib.db_conn import DatabaseConnection
 from lib.models.book import Book
 from lib.models.user import User
 from lib.user_repo import UserRepository
+
+load_dotenv()
 
 
 def get_db():
@@ -24,6 +28,10 @@ def create_app(db_url=None):
 
     bcrypt = Bcrypt(app)
 
+    flagsmith = Flagsmith(
+        environment_key=os.getenv("FLAGSMITH_KEY"),
+    )
+
     # the app uses whatever database we give it when starting
     app.config["DB_URL"] = db_url or os.getenv(
         "POSTGRES_URL", f"postgresql://localhost/{DatabaseConnection.DATABASE_NAME}"
@@ -33,7 +41,10 @@ def create_app(db_url=None):
 
     @app.route("/", methods=["GET"])
     def index():
-        return render_template("index.html")
+        flags = flagsmith.get_environment_flags()
+
+        show_button = flags.is_feature_enabled("show_demo_button")
+        return render_template("index.html", show_button=show_button)
 
     @app.route("/books", methods=["GET"])
     def books():

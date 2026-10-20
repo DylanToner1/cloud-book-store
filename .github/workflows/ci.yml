@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: prod
 
     services:
       postgres:
@@ -40,5 +41,6 @@ jobs:
       - name: Run tests
         env:
           POSTGRES_TEST_URL: postgresql://postgres@localhost:5432/book_store_test
+          FLAGSMITH_KEY: ${{ secrets.FLAGSMITH_KEY }}
         run: |
           pytest
