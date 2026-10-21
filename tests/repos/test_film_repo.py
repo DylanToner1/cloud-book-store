@@ -1,5 +1,4 @@
 from datetime import date
-from decimal import Decimal
 
 from lib.film_repo import FilmRepository
 from lib.models.film import Film

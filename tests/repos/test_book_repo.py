@@ -1,6 +1,7 @@
+from decimal import Decimal
+
 from lib.book_repo import BookRepository
 from lib.models.book import Book
-from decimal import Decimal
 
 
 def test_get_all_books(db_connection):

@@ -1,5 +1,6 @@
-from lib.models.film import Film
 from datetime import date
+
+from lib.models.film import Film
 
 
 def test_film_init():

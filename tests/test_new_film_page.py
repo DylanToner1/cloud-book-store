@@ -1,5 +1,4 @@
 from playwright.sync_api import Page, expect
-from lib.db_conn import DatabaseConnection
 
 
 def test_can_add_film(logged_in_page: Page):

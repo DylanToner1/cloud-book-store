@@ -1,7 +1,6 @@
 from lib.models.user import User
 from lib.user_repo import UserRepository
 
-
 # passwords are test, test2
 # hashes must match the seed file
 TEST1_PW_HASH = "$2b$12$AvvLEFFUG/00XzBB6Xz54Onm9cTnqJQ7TIf5Xm4JqDErb7TaAyXJi"
