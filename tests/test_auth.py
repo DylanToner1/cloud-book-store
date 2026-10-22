@@ -64,6 +64,20 @@ def test_user_log_in_page_invalid_input(db_connection, page: Page):
     expect(page.get_by_label("Password")).to_be_empty()
 
 
+def test_user_sign_up_page(db_connection, page: Page):
+    page.goto("/signup")
+
+    page.get_by_label("Username").fill("test3")
+    page.get_by_label("Password").fill("test")
+
+    page.get_by_role("button", name="Sign Up").click()
+    assert page.url.endswith("/")
+
+    expect(
+        page.get_by_test_id("welcome-msg").filter(has_text="Hello, test3")
+    ).to_be_visible()
+
+
 def test_user_sign_up_page_invalid_input(db_connection, page: Page):
     page.goto("/signup")
 
@@ -78,6 +92,25 @@ def test_user_sign_up_page_invalid_input(db_connection, page: Page):
     ).to_be_visible()
 
     expect(page.get_by_label("Username")).to_have_value("test")
+    expect(page.get_by_label("Password")).to_be_empty()
+
+
+def test_user_sign_up_page_username_exists(db_connection, page: Page):
+    page.goto("/signup")
+
+    page.get_by_label("Username").fill("test")
+    page.get_by_label("Password").fill("1234")
+
+    page.get_by_role("button", name="Sign Up").click()
+    assert page.url.endswith("/signup")
+
+    expect(
+        page.locator("p.error").filter(
+            has_text="An account with that username already exists"
+        )
+    ).to_be_visible()
+
+    expect(page.get_by_label("Username")).to_be_empty()
     expect(page.get_by_label("Password")).to_be_empty()
 
 

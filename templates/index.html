@@ -7,7 +7,7 @@
 <h1 class="text-4xl font-semibold">Welcome to Book Store</h1>
 
 {% if session.get("username") %}
-<p>Hello, {{ session.get("username") }}</p>
+<p data-testid="welcome-msg">Hello, {{ session.get("username") }}</p>
 
 {% endif %}
 

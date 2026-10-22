@@ -180,9 +180,14 @@ def create_app(db_url=None):
             session["signup_username"] = username
             return redirect("/signup")
 
-        pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
-
         repo = UserRepository(get_db())
+
+        existing_user = repo.get_by_username(username)
+        if existing_user:
+            flash("An account with that username already exists")
+            return redirect("/signup")
+
+        pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
 
         user_id = repo.create(User(id=0, username=username, password=pw_hash))
 
